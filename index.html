@@ -10,5 +10,7 @@
   <div ng-repeat="post in posts | orderBy: 'upvotes'">
     <h1>{{post.title}}</h1>{{post.content}}
   </div>
+
+  <button ng-click="addPost()">Add a Post</button>
 </body>
 </html>
