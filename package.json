@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Cogax/flapperNews",
   "dependencies": {
     "angular": "^1.3.8",
+    "angular-ui-router": "^0.2.13",
     "bootstrap-sass": "^3.3.1"
   }
 }

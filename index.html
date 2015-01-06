@@ -5,30 +5,33 @@
   <title>My Angular App!</title>
   <link rel="stylesheet" href="stylesheets/app.css"/>
   <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="app.js"></script>
 </head>
 <body ng-app="flapperNews" ng-controller="MainCtrl">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-
-      <div ng-repeat="post in posts | orderBy: '-upvotes'">
-        <h2>{{post.title}}</h2><em>{{post.content}}</em> - upvotes: {{post.upvotes}}<br/>
-        <span style="cursor: pointer;" class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvote(post)"></span>
-      </div>
-
-      <form ng-submit="addPost()">
-        <h3>Add a new post</h3>
-
-        <div class="form-group">
-          <input class="form-control" placeholder="Title" type="text" ng-model="title"/>
-        </div>
-        <div class="form-group">
-          <textarea class="form-control" placeholder="Content" ng-model="content"></textarea>
-        </div>
-        <button class="btn btn-primary" type="submit">Post</button>
-      </form>
-
+      <ui-view></ui-view>
     </div>
   </div>
+
+  <script type="text/ng-template" id="/home.html">
+    <div ng-repeat="post in posts | orderBy: '-upvotes'">
+      <h2>{{post.title}}</h2><em>{{post.content}}</em> - upvotes: {{post.upvotes}}<br/>
+      <span style="cursor: pointer;" class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvote(post)"></span>
+    </div>
+
+    <form ng-submit="addPost()">
+      <h3>Add a new post</h3>
+
+      <div class="form-group">
+        <input class="form-control" placeholder="Title" type="text" ng-model="title"/>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" placeholder="Content" ng-model="content"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Post</button>
+    </form>
+  </script>
 </body>
 </html>
