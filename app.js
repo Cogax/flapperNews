@@ -11,6 +11,11 @@ angular.module('flapperNews', ['ui.router'])
           url: '/home',
           templateUrl: '/home.html',
           controller: 'MainCtrl'
+        })
+        .state('post', {
+          url: '/post/{id}',
+          templateUrl: '/post.html',
+          controller: 'PostCtrl'
         });
 
       $urlRouterProvider.otherwise('home');
@@ -18,11 +23,7 @@ angular.module('flapperNews', ['ui.router'])
   ])
   .factory('posts', [function() {
     var o = {
-      posts: [
-        {title: 'post1', content: 'content1', upvotes: 3},
-        {title: 'post2', content: 'content2', upvotes: 2},
-        {title: 'post3', content: 'content3', upvotes: 1}
-      ]
+      posts: []
     }
     return o;
   }])
@@ -30,8 +31,13 @@ angular.module('flapperNews', ['ui.router'])
     $scope.posts = posts.posts;
 
     $scope.addPost = function() {
-      if($scope.title === undefined || $scope.title === '') return;
-      $scope.posts.push({title: $scope.title, content: $scope.content, upvotes: 0});
+      if ($scope.title === undefined || $scope.title === '') return;
+      $scope.posts.push({
+        title: $scope.title,
+        content: $scope.content,
+        upvotes: 0,
+        comments: []
+      });
       $scope.title = '';
       $scope.content = '';
     }
@@ -39,5 +45,22 @@ angular.module('flapperNews', ['ui.router'])
     $scope.incrementUpvote = function(post) {
       post.upvotes++;
     }
-  }]
-);
+  }])
+  .controller('PostCtrl', ['$scope', '$stateParams','posts', function($scope, $stateParams, posts) {
+    $scope.post = posts.posts[$stateParams.id];
+
+    $scope.addComment = function() {
+      if($scope.comment === undefined || $scope.comment === '') return;
+      $scope.post.comments.push({
+        author: $scope.author,
+        content: $scope.comment,
+        upvotes: 0
+      });
+      $scope.comment = '';
+      $scope.author = '';
+    }
+
+    $scope.incrementUpvote = function(comment) {
+      comment.upvotes++;
+    }
+  }]);
